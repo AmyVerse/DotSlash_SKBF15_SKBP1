@@ -150,28 +150,31 @@ export default function SupplyChainDashboard() {
       };
 
       let response: any;
-      let retries = 5;
+      let retries = 3;
 
       while (retries >= 0) {
         try {
           response = await ai.models.generateContent({
-            model: 'gemini-2.5-pro',
+            model: 'gemini-2.5-flash',
             contents: prompt,
             config: {
               responseMimeType: 'application/json',
               responseSchema: responseSchema
             }
           });
-          break; // success
+          break;
         } catch (err: any) {
-          if (retries === 0 || !err.message?.includes('503')) throw err;
-          console.warn(`Gemini 503 High Demand. Retrying in 2s... (${retries} attempts left)`);
-          await new Promise(r => setTimeout(r, 2000));
+          if (retries === 0 || !err.message?.includes('503')) {
+            console.warn('Gemini suggestion failed:', err.message);
+            break;
+          }
+          console.warn(`Gemini 503. Retrying in 1s... (${retries} left)`);
+          await new Promise(r => setTimeout(r, 1000));
           retries--;
         }
       }
 
-      if (response.text) {
+      if (response?.text) {
         const recs = JSON.parse(response.text);
 
         // Cache the recommendations
