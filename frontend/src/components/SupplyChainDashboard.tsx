@@ -528,7 +528,7 @@ export default function SupplyChainDashboard() {
     <div className="h-screen w-full bg-[#fcf9f4] flex flex-col font-sans overflow-hidden text-[#553a34] selection:bg-[#ffdea0] selection:text-[#261900]">
       <div className="h-24 border-b border-[#dac2b6] border-opacity-30 flex items-center justify-between px-10 bg-white z-20 shadow-sm">
         <div className="flex flex-col">
-          <h1 className="text-3xl font-bold text-[#553a34] tracking-tighter uppercase leading-none">
+          <h1 className="text-3xl font-bold text-[#553a34] tracking-tighter leading-none">
             ESGAudit <span className="text-[#974726] font-bold italic lowercase text-base tracking-widest pl-1">v2.1</span>
           </h1>
           <span className="text-[11px] text-[#877369] font-bold tracking-[0.3em] uppercase mt-2">Supply Topology Engine</span>
