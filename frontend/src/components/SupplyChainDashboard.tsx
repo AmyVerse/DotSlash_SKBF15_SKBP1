@@ -14,6 +14,7 @@ import { AICommandBar } from './AICommandBar';
 import type { AICommandResult, AIRecommendation } from './AICommandBar';
 import { TimelineView, type Snapshot } from './TimelineView';
 import { AIInsightPanel, type ImpactSummary } from './AIInsightPanel';
+import { CircularEconomyPanel } from './CircularEconomyPanel';
 
 const PROACTIVE_SUGGESTION_CACHE = new Map<string, AIRecommendation[]>();
 
@@ -576,6 +577,8 @@ export default function SupplyChainDashboard() {
           isSuggesting={isSuggesting}
           onSuggestionClick={setAutoRunCommand}
         />
+
+        <CircularEconomyPanel nodes={nodes} edges={edges} />
 
         <InspectorPanel
           selectedNode={selectedNode}
