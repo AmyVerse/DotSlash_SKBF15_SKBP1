@@ -1,0 +1,63 @@
+{
+  "S1": [
+    {
+      "id": "A1-1", "type": "supplier",
+      "data": { "label": "Nordic Green Steel", "tier_level": 1, "criticality_level": "High", "score": 98, "materialIndex": 0.2, "base_cost": 800, "recycled": true, "location": "Sweden", "country_code": "EU" },
+      "edgeData": { "label": "Steel Frame", "logistics": { "mode": "Rail", "distance_km": 1200, "weight_ton": 200, "cost": 4500, "emission_factor": 0.05 } }
+    }
+  ],
+  "S2": [
+    {
+      "id": "A2-1", "type": "supplier",
+      "data": { "label": "Taiwan Semiconductor", "tier_level": 1, "criticality_level": "Critical", "score": 75, "materialIndex": 2.2, "base_cost": 300, "recycled": false, "location": "Taiwan", "country_code": "TW" },
+      "edgeData": { "label": "Control Boards", "logistics": { "mode": "Air", "distance_km": 9000, "weight_ton": 50, "cost": 35000, "emission_factor": 0.8 } }
+    },
+    {
+      "id": "A2-2", "type": "supplier",
+      "data": { "label": "Bosch EU Sensors", "tier_level": 1, "criticality_level": "Medium", "score": 90, "materialIndex": 1.5, "base_cost": 550, "recycled": false, "location": "Germany", "country_code": "EU" },
+      "edgeData": { "label": "Control Boards", "logistics": { "mode": "Truck", "distance_km": 300, "weight_ton": 50, "cost": 1000, "emission_factor": 0.15 } }
+    }
+  ],
+  "S3": [
+    {
+      "id": "A3-1", "type": "supplier",
+      "data": { "label": "Euro-Polymer", "tier_level": 1, "criticality_level": "Low", "score": 85, "materialIndex": 1.0, "base_cost": 220, "recycled": true, "location": "France", "country_code": "EU" },
+      "edgeData": { "label": "Interior Plastic", "logistics": { "mode": "Rail", "distance_km": 800, "weight_ton": 100, "cost": 2000, "emission_factor": 0.05 } }
+    }
+  ],
+  "S4": [
+    {
+      "id": "A4-1", "type": "supplier",
+      "data": { "label": "Local Junkyard", "tier_level": 2, "criticality_level": "Low", "score": 70, "materialIndex": 0.8, "base_cost": 150, "recycled": true, "location": "Germany", "country_code": "EU" },
+      "edgeData": { "label": "Scrap Metal", "logistics": { "mode": "Truck", "distance_km": 50, "weight_ton": 150, "cost": 300, "emission_factor": 0.15 } }
+    }
+  ],
+  "S5": [
+    {
+      "id": "A5-1", "type": "supplier",
+      "data": { "label": "Brazilian Iron", "tier_level": 2, "criticality_level": "High", "score": 50, "materialIndex": 2.5, "base_cost": 120, "recycled": false, "location": "Brazil", "country_code": "BR" },
+      "edgeData": { "label": "Pig Iron", "logistics": { "mode": "Ship", "distance_km": 10000, "weight_ton": 200, "cost": 6000, "emission_factor": 0.02 } }
+    }
+  ],
+  "S6": [
+    {
+      "id": "A6-1", "type": "supplier",
+      "data": { "label": "Aus Rare Mins", "tier_level": 2, "criticality_level": "Critical", "score": 78, "materialIndex": 3.5, "base_cost": 120, "recycled": false, "location": "Australia", "country_code": "AU" },
+      "edgeData": { "label": "Raw Earths", "logistics": { "mode": "Ship", "distance_km": 14000, "weight_ton": 20, "cost": 4000, "emission_factor": 0.02 } }
+    }
+  ],
+  "S7": [
+    {
+      "id": "A7-1", "type": "supplier",
+      "data": { "label": "Nevada Lithium", "tier_level": 2, "criticality_level": "High", "score": 85, "materialIndex": 1.2, "base_cost": 400, "recycled": false, "location": "USA", "country_code": "US" },
+      "edgeData": { "label": "Lithium Cells", "logistics": { "mode": "Truck", "distance_km": 3000, "weight_ton": 40, "cost": 5000, "emission_factor": 0.15 } }
+    }
+  ],
+  "S8": [
+    {
+      "id": "A8-1", "type": "supplier",
+      "data": { "label": "Bio-Synthetics", "tier_level": 2, "criticality_level": "Medium", "score": 95, "materialIndex": 0.1, "base_cost": 200, "recycled": true, "location": "Canada", "country_code": "CA" },
+      "edgeData": { "label": "Bio Polymers", "logistics": { "mode": "Rail", "distance_km": 4000, "weight_ton": 200, "cost": 12000, "emission_factor": 0.05 } }
+    }
+  ]
+}

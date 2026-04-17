@@ -1,13 +1,168 @@
 {
   "nodes": [
-    { "id": "P1", "type": "plant", "position": { "x": 800, "y": 250 }, "data": { "label": "Nagpur Assembly", "emissions": 120, "cost": 0 } },
-    { "id": "S1", "type": "supplier", "position": { "x": 400, "y": 150 }, "data": { "label": "Midstream Steel", "score": 45, "tier": 1 } },
-    { "id": "S2", "type": "supplier", "position": { "x": 400, "y": 350 }, "data": { "label": "Eco-Polymer Co", "score": 85, "tier": 1 } },
-    { "id": "S3", "type": "supplier", "position": { "x": 50, "y": 150 }, "data": { "label": "Dirty Mining Corp", "score": 15, "tier": 2 } }
+    {
+      "id": "P1",
+      "type": "plant",
+      "data": {
+        "label": "Berlin Gigafactory",
+        "tier_level": 0,
+        "location": "Germany",
+        "country_code": "EU"
+      }
+    },
+    {
+      "id": "S1",
+      "type": "supplier",
+      "data": {
+        "label": "Euro-Steel",
+        "tier_level": 1,
+        "criticality_level": "Medium",
+        "score": 75,
+        "materialIndex": 1.2,
+        "base_cost": 500,
+        "recycled": true,
+        "location": "Germany",
+        "country_code": "EU"
+      }
+    },
+    {
+      "id": "S2",
+      "type": "supplier",
+      "data": {
+        "label": "Shenzhen Electronics",
+        "tier_level": 1,
+        "criticality_level": "High",
+        "score": 45,
+        "materialIndex": 3.5,
+        "base_cost": 250,
+        "recycled": false,
+        "location": "China",
+        "country_code": "CN"
+      }
+    },
+    {
+      "id": "S3",
+      "type": "supplier",
+      "data": {
+        "label": "Texas Plastics",
+        "tier_level": 1,
+        "criticality_level": "Low",
+        "score": 55,
+        "materialIndex": 2.2,
+        "base_cost": 150,
+        "recycled": false,
+        "location": "USA",
+        "country_code": "US"
+      }
+    },
+    {
+      "id": "S4",
+      "type": "supplier",
+      "data": {
+        "label": "Scrap Processors LLC",
+        "tier_level": 2,
+        "criticality_level": "Low",
+        "score": 88,
+        "materialIndex": 0.5,
+        "base_cost": 200,
+        "recycled": true,
+        "location": "Germany",
+        "country_code": "EU"
+      }
+    },
+    {
+      "id": "S5",
+      "type": "supplier",
+      "data": {
+        "label": "Ruhr Ironworks",
+        "tier_level": 2,
+        "criticality_level": "High",
+        "score": 35,
+        "materialIndex": 2.8,
+        "base_cost": 180,
+        "recycled": false,
+        "location": "Germany",
+        "country_code": "EU"
+      }
+    },
+    {
+      "id": "S6",
+      "type": "supplier",
+      "data": {
+        "label": "Rare Earth Co",
+        "tier_level": 2,
+        "criticality_level": "Critical",
+        "score": 15,
+        "materialIndex": 6.5,
+        "base_cost": 50,
+        "recycled": false,
+        "location": "China",
+        "country_code": "CN"
+      }
+    },
+    {
+      "id": "S7",
+      "type": "supplier",
+      "data": {
+        "label": "Atacama Lithium",
+        "tier_level": 2,
+        "criticality_level": "High",
+        "score": 50,
+        "materialIndex": 1.8,
+        "base_cost": 300,
+        "recycled": false,
+        "location": "Chile",
+        "country_code": "CL"
+      }
+    },
+    {
+      "id": "S8",
+      "type": "supplier",
+      "data": {
+        "label": "Gulf Refinery",
+        "tier_level": 2,
+        "criticality_level": "Medium",
+        "score": 40,
+        "materialIndex": 3.0,
+        "base_cost": 90,
+        "recycled": false,
+        "location": "USA",
+        "country_code": "US"
+      }
+    }
   ],
   "edges": [
-    { "id": "e3-1", "source": "S3", "target": "S1", "label": "Raw Ore", "animated": true, "style": { "stroke": "#ef4444", "strokeWidth": 4 } },
-    { "id": "e1-p", "source": "S1", "target": "P1", "label": "Steel Sheets", "animated": true },
-    { "id": "e2-p", "source": "S2", "target": "P1", "label": "Recycled Plastic", "animated": true, "style": { "stroke": "#10b981" } }
+    {
+      "id": "e1-p", "source": "S1", "target": "P1", "type": "default", "animated": true,
+      "data": { "label": "Steel Frame", "logistics": { "mode": "Truck", "distance_km": 400, "weight_ton": 200, "cost": 3000, "emission_factor": 0.15 } }
+    },
+    {
+      "id": "e2-p", "source": "S2", "target": "P1", "type": "default", "animated": true,
+      "data": { "label": "Control Boards", "logistics": { "mode": "Ship", "distance_km": 15000, "weight_ton": 50, "cost": 15000, "emission_factor": 0.02 } }
+    },
+    {
+      "id": "e3-p", "source": "S3", "target": "P1", "type": "default", "animated": true,
+      "data": { "label": "Interior Plastic", "logistics": { "mode": "Ship", "distance_km": 8000, "weight_ton": 100, "cost": 8000, "emission_factor": 0.02 } }
+    },
+    {
+      "id": "e4-1", "source": "S4", "target": "S1", "type": "default", "animated": true,
+      "data": { "label": "Scrap Metal", "logistics": { "mode": "Rail", "distance_km": 200, "weight_ton": 150, "cost": 1000, "emission_factor": 0.05 } }
+    },
+    {
+      "id": "e5-1", "source": "S5", "target": "S1", "type": "default", "animated": true,
+      "data": { "label": "Pig Iron", "logistics": { "mode": "Truck", "distance_km": 100, "weight_ton": 200, "cost": 800, "emission_factor": 0.15 } }
+    },
+    {
+      "id": "e6-2", "source": "S6", "target": "S2", "type": "default", "animated": true,
+      "data": { "label": "Raw Earths", "logistics": { "mode": "Truck", "distance_km": 1000, "weight_ton": 20, "cost": 1500, "emission_factor": 0.15 } }
+    },
+    {
+      "id": "e7-2", "source": "S7", "target": "S2", "type": "default", "animated": true,
+      "data": { "label": "Lithium Cells", "logistics": { "mode": "Ship", "distance_km": 19000, "weight_ton": 40, "cost": 12000, "emission_factor": 0.02 } }
+    },
+    {
+      "id": "e8-3", "source": "S8", "target": "S3", "type": "default", "animated": true,
+      "data": { "label": "Polymers", "logistics": { "mode": "Pipeline", "distance_km": 500, "weight_ton": 200, "cost": 500, "emission_factor": 0.01 } }
+    }
   ]
 }

@@ -5,7 +5,7 @@ function App() {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    // make a route for the dashboard and the login page
+  
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage isLogin={isLogin} setIsLogin={setIsLogin} />} />
