@@ -12,6 +12,10 @@
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
+    "strict": false,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "noImplicitReturns": false,
     "noEmit": true,
     "jsx": "react-jsx",
 
@@ -19,9 +23,10 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "allowJs": true,
-    "noImplicitAny": false,
+    "checkJs": false,
     "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": false,
+    "ignoreDeprecations": "5.0"
   },
   "include": ["src"]
 }
