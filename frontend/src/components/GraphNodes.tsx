@@ -32,12 +32,18 @@ export const PlantNode = ({ data, selected }: any) => {
 
 export const SupplierNode = ({ data, selected }: any) => {
   const isHotspot = data.isHotspot;
+  const isTaxed = data.isTaxed;
+  const isSubsidized = data.isSubsidized;
   const isRecycled = data.recycled;
   
+  let borderClass = 'border-slate-700';
+  if (isHotspot) borderClass = 'border-red-500 ring-4 ring-red-500/20';
+  else if (isTaxed) borderClass = 'border-orange-500 ring-4 ring-orange-500/20';
+  else if (isSubsidized) borderClass = 'border-emerald-500 ring-4 ring-emerald-500/20';
+  else if (selected) borderClass = 'border-blue-400 ring-4 ring-blue-500/20';
+
   return (
-    <div className={`px-4 py-3 shadow-xl rounded-xl bg-slate-900 border-2 transition-all duration-300 w-52 
-      ${isHotspot ? 'border-red-500 ring-4 ring-red-500/20' : (selected ? 'border-blue-400 ring-4 ring-blue-500/20' : 'border-slate-700')}
-    `}>
+    <div className={`px-4 py-3 shadow-xl rounded-xl bg-slate-900 border-2 transition-all duration-300 w-52 ${borderClass}`}>
       <div className="flex items-center justify-between gap-2 mb-2">
         <div className="flex items-center gap-2">
           <div className={`p-1.5 rounded-md ${isHotspot ? 'bg-red-500/20' : 'bg-slate-800'}`}>

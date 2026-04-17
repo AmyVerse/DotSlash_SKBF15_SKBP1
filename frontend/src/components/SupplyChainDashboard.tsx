@@ -9,6 +9,10 @@ import alternativesData from '../mock_data/alternatives.json';
 import { PlantNode, SupplierNode } from './GraphNodes';
 import { PolicyManager } from './PolicyManager';
 import { InspectorPanel } from './InspectorPanel';
+import { AICommandBar } from './AICommandBar';
+import type { AICommandResult } from './AICommandBar';
+import { TimelineView, type Snapshot } from './TimelineView';
+import { AIInsightPanel, type ImpactSummary } from './AIInsightPanel';
 
 const nodeTypes = { plant: PlantNode, supplier: SupplierNode };
 
@@ -42,22 +46,114 @@ const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'LR') => 
   return { nodes, edges };
 };
 
+// Pure helper: recalculates total liability for any given state (no React deps)
+const computeLiability = (
+  edges: any[],
+  nodes: any[],
+  multipliers: Record<string, number>,
+  taxRate: number
+): number => {
+  let total = 0;
+  edges.forEach(edge => {
+    const logistics = edge.data?.logistics;
+    const sourceNode = nodes.find((n: any) => n.id === edge.source);
+    if (logistics && sourceNode) {
+      const edgeEmission =
+        (logistics.weight_ton * sourceNode.data.materialIndex) +
+        (logistics.weight_ton * logistics.distance_km * logistics.emission_factor);
+      const country = sourceNode.data.country_code || 'NA';
+      const mult = multipliers[country] ?? 1.0;
+      total += edgeEmission * taxRate * mult;
+    }
+  });
+  return Math.floor(total);
+};
+
 export default function SupplyChainDashboard() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
 
-  // Policy States
-  const [carbonTaxRate, setCarbonTaxRate] = useState(1500);
+  const [carbonTaxRate] = useState(1500);
   const [countryMultipliers, setCountryMultipliers] = useState<Record<string, number>>({
     'EU': 1.0, 'CN': 1.5, 'US': 1.0, 'CL': 1.0, 'TW': 1.0, 'BR': 1.0, 'AU': 1.0, 'CA': 1.0
   });
 
-  const updateCountryMultiplier = (country: string, val: number) => {
-    setCountryMultipliers(prev => ({
-      ...prev,
-      [country]: val
-    }));
+  // AI suggestions & impact state
+  const [aiResponse, setAiResponse] = useState('');
+  const [aiRecommendations, setAiRecommendations] = useState<string[]>([]);
+  const [impactSummary, setImpactSummary] = useState<ImpactSummary | null>(null);
+  const [changeSummary, setChangeSummary] = useState<string | null>(null);
+
+  // Timeline States
+  const [timeline, setTimeline] = useState<Snapshot[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+
+  const pushToTimeline = (desc: string, currentNodes: Node[], currentEdges: Edge[], currentMults: Record<string, number>) => {
+    const snapshot: Snapshot = {
+      timestamp: new Date().toLocaleTimeString(),
+      description: desc,
+      nodes: JSON.parse(JSON.stringify(currentNodes)),
+      edges: JSON.parse(JSON.stringify(currentEdges)),
+      countryMultipliers: { ...currentMults }
+    };
+
+    setTimeline(prev => {
+      const activeStack = currentIndex === -1 ? prev : prev.slice(0, currentIndex + 1);
+      const nextStack = [...activeStack, snapshot];
+      setCurrentIndex(nextStack.length - 1);
+      return nextStack;
+    });
+  };
+
+  const restoreSnapshot = (idx: number) => {
+    const snap = timeline[idx];
+    if (snap) {
+       setNodes(JSON.parse(JSON.stringify(snap.nodes)));
+       setEdges(JSON.parse(JSON.stringify(snap.edges)));
+       setCountryMultipliers({ ...snap.countryMultipliers });
+       setCurrentIndex(idx);
+    }
+  };
+
+  const handleAICommand = (result: AICommandResult) => {
+    const beforeLiability = computeLiability(edges, nodes, countryMultipliers, carbonTaxRate);
+
+    const nextMults = { ...countryMultipliers };
+    result.tax_updates?.forEach(update => {
+      if (nextMults[update.country_code] !== undefined) {
+         nextMults[update.country_code] = update.multiplier;
+      }
+    });
+
+    const afterLiability = computeLiability(edges, nodes, nextMults, carbonTaxRate);
+    const delta = afterLiability - beforeLiability;
+
+    // Find affected supplier nodes
+    const changedCountries = result.tax_updates?.map(u => u.country_code) ?? [];
+    const affectedNodes = nodes
+      .filter(n => changedCountries.includes(n.data?.country_code))
+      .map(n => n.data.label);
+
+    const bullets: string[] = [
+      ...(result.tax_updates?.map(u => {
+        const pct = ((Math.abs(u.multiplier - 1)) * 100).toFixed(0);
+        return u.multiplier > 1.0
+          ? `${pct}% import tariff applied on ${u.country_code} origin nodes`
+          : `${pct}% subsidy applied to ${u.country_code} routes`;
+      }) ?? []),
+      affectedNodes.length > 0
+        ? `${affectedNodes.length} supplier(s) affected: ${affectedNodes.slice(0, 3).join(', ')}${affectedNodes.length > 3 ? ` +${affectedNodes.length - 3} more` : ''}`
+        : 'No matching supplier nodes found in active graph.',
+      `Policy liability changed by ₹${Math.abs(delta).toLocaleString()} (${delta >= 0 ? '↑ increase' : '↓ decrease'})`,
+    ];
+
+    setCountryMultipliers(nextMults);
+    setAiResponse(result.ai_response || '');
+    setAiRecommendations(result.recommended_actions || []);
+    setImpactSummary({ bullets, delta, before: beforeLiability, after: afterLiability });
+    setChangeSummary(result.ai_response || null);
+    pushToTimeline(result.ai_response || 'AI Policy Execution', nodes, edges, nextMults);
   };
 
   // Initialize Layout
@@ -68,6 +164,17 @@ export default function SupplyChainDashboard() {
     );
     setNodes(layoutedNodes);
     setEdges(layoutedEdges);
+    
+    if (timeline.length === 0) {
+       setCurrentIndex(0);
+       setTimeline([{
+          timestamp: new Date().toLocaleTimeString(),
+          description: "Initial Baseline State",
+          nodes: JSON.parse(JSON.stringify(layoutedNodes)),
+          edges: JSON.parse(JSON.stringify(layoutedEdges)),
+          countryMultipliers: { 'EU': 1.0, 'CN': 1.5, 'US': 1.0, 'CL': 1.0, 'TW': 1.0, 'BR': 1.0, 'AU': 1.0, 'CA': 1.0 }
+       }]);
+    }
   }, []);
 
   // Compute accumulated emissions (Schema logic: recursively walk edges to Plants)
@@ -118,6 +225,10 @@ export default function SupplyChainDashboard() {
       if (node.type === 'supplier') {
         const isHotspot = nodeHotspotChecks[node.id] || node.data.score < 30;
         node.data.isHotspot = isHotspot;
+        
+        const countryCode = node.data.country_code || 'NA';
+        node.data.isTaxed = countryMultipliers[countryCode] > 1.0;
+        node.data.isSubsidized = countryMultipliers[countryCode] < 1.0;
       }
     });
 
@@ -169,6 +280,8 @@ export default function SupplyChainDashboard() {
     });
 
     const layouted = getLayoutedElements(swappedNodes, swappedEdges);
+    pushToTimeline(`Swapped supplier for ${alternative.data.label}`, layouted.nodes, layouted.edges, countryMultipliers);
+    
     setNodes(layouted.nodes);
     setEdges(layouted.edges);
     setSelectedNode(null); 
@@ -185,7 +298,14 @@ export default function SupplyChainDashboard() {
           <span className="text-[8px] text-slate-500 font-bold tracking-[0.2em] -mt-1 uppercase">Topology Engine</span>
         </div>
 
-        <div className="flex gap-6 items-center">
+        <div className="flex gap-3 items-center">
+          {/* Change Summary Box */}
+          {changeSummary && (
+            <div className="max-w-xs bg-purple-900/30 border border-purple-500/30 px-3 py-1.5 rounded-lg">
+              <p className="text-[9px] text-purple-400/70 uppercase font-black mb-0.5">Last AI Change</p>
+              <p className="text-[10px] text-purple-200 leading-snug line-clamp-2">{changeSummary}</p>
+            </div>
+          )}
           <div className="text-right bg-slate-800/40 px-4 py-1.5 rounded-lg border border-white/5">
             <p className="text-[9px] text-slate-500 uppercase font-black">Total Accumulation</p>
             <p className="text-sm font-mono text-slate-300 font-bold">{totalNetworkEmissions.toLocaleString(undefined, { maximumFractionDigits: 0 })} tons CO2e</p>
@@ -198,9 +318,15 @@ export default function SupplyChainDashboard() {
       </div>
 
       <div className="flex-grow relative">
-        <PolicyManager 
-          carbonTaxRate={carbonTaxRate} setCarbonTaxRate={setCarbonTaxRate}
-          countryMultipliers={countryMultipliers} updateCountryMultiplier={updateCountryMultiplier}
+        <TimelineView 
+           timeline={timeline}
+           currentIndex={currentIndex}
+           onRestore={restoreSnapshot}
+        />
+        <AIInsightPanel
+          aiResponse={aiResponse}
+          impactSummary={impactSummary}
+          recommendations={aiRecommendations}
         />
         
         <InspectorPanel 
@@ -226,6 +352,10 @@ export default function SupplyChainDashboard() {
           <Background color="#1e293b" gap={20} size={1} />
           <Controls className="bg-slate-900 border-slate-700 fill-white shadow-2xl" />
         </ReactFlow>
+
+        {/* The NLP AI Co-Pilot Input */}
+        <AICommandBar onCommand={handleAICommand} />
+
       </div>
     </div>
   );
