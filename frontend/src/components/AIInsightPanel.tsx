@@ -31,20 +31,20 @@ export const AIInsightPanel: React.FC<AIInsightPanelProps> = ({
   const isPositiveDelta = impactSummary && impactSummary.delta > 0;
 
   return (
-    <div className="absolute top-24 right-10 w-80 bg-white border border-[#dac2b6] border-opacity-40 rounded-md shadow-2xl z-20 text-[#553a34] font-sans overflow-hidden animate-in slide-in-from-right-4 fade-in duration-300">
+    <div className="absolute top-24 right-10 w-80 bg-white border border-outline-variant border-opacity-40 rounded-md shadow-2xl z-20 text-[#553a34] font-sans overflow-hidden animate-in slide-in-from-right-4 fade-in duration-300">
 
       {/* AI Response Header - Archive Style */}
       {aiResponse && (
-        <div className="p-5 bg-[#ebe8e3] border-b border-[#dac2b6] border-opacity-30 flex gap-3 items-start">
-          <Sparkles size={14} className="text-[#974726] mt-0.5 shrink-0" />
+        <div className="p-5 bg-surface-container border-b border-outline-variant border-opacity-30 flex gap-3 items-start">
+          <Sparkles size={14} className="text-secondary mt-0.5 shrink-0" />
           <p className="text-[11px] text-[#553a34] font-medium leading-relaxed italic">{aiResponse}</p>
         </div>
       )}
 
       {/* Impact Summary Section */}
       {impactSummary && (
-        <div className="p-5 border-b border-[#dac2b6] border-opacity-20 bg-white">
-          <div className="flex items-center gap-2 mb-4 border-b border-[#dac2b6] border-opacity-20 pb-3">
+        <div className="p-5 border-b border-outline-variant border-opacity-20 bg-white">
+          <div className="flex items-center gap-2 mb-4 border-b border-outline-variant border-opacity-20 pb-3">
             <Zap size={14} className="text-[#974726]" />
             <span className="text-[9px] uppercase font-bold text-[#877369] tracking-[0.2em]">Impact Assessment</span>
           </div>
@@ -55,31 +55,31 @@ export const AIInsightPanel: React.FC<AIInsightPanelProps> = ({
             : 'bg-[#15803d]/5 border-[#15803d]/30'
             }`}>
             <div className="flex flex-col">
-            <span className="text-[9px] text-[#877369] uppercase font-bold tracking-widest">Estimated Policy Impact</span>
-            <span className={`text-lg font-bold newsreader ${isPositiveDelta ? 'text-[#b91c1c]' : 'text-[#15803d]'}`}>
-              {impactSummary.delta >= 0 ? '+' : ''}₹{impactSummary.delta.toLocaleString()}
-            </span>
+              <span className="text-[9px] text-[#877369] uppercase font-bold tracking-widest">Estimated Policy Impact</span>
+              <span className={`text-lg font-bold newsreader ${isPositiveDelta ? 'text-[#b91c1c]' : 'text-[#15803d]'}`}>
+                {impactSummary.delta >= 0 ? '+' : ''}₹{impactSummary.delta.toLocaleString()}
+              </span>
+            </div>
+            {isPositiveDelta
+              ? <TrendingUp size={24} className="text-[#b91c1c] opacity-40" />
+              : <TrendingDown size={24} className="text-[#15803d] opacity-40" />
+            }
           </div>
-          {isPositiveDelta
-            ? <TrendingUp size={24} className="text-[#b91c1c] opacity-40" />
-            : <TrendingDown size={24} className="text-[#15803d] opacity-40" />
-          }
-        </div>
 
-        {/* Before/After - Technical Comparison */}
-        <div className="flex items-center gap-3 mb-5">
-          <div className="flex-1 bg-[#fcf9f4] border border-[#dac2b6] border-opacity-40 rounded-sm p-3 text-center">
-            <div className="text-[8px] text-[#877369] uppercase font-bold mb-1">Baseline</div>
-            <div className="text-[10px] font-bold text-[#877369] newsreader">₹{impactSummary.before.toLocaleString()}</div>
-          </div>
-          <div className="text-[#dac2b6] font-bold">»</div>
-          <div className="flex-1 bg-[#fcf9f4] border border-[#dac2b6] border-opacity-40 rounded-sm p-3 text-center">
-            <div className="text-[8px] text-[#877369] uppercase font-bold mb-1">Simulated</div>
-            <div className={`text-[10px] font-bold newsreader ${isPositiveDelta ? 'text-[#b91c1c]' : 'text-[#15803d]'}`}>
-              ₹{impactSummary.after.toLocaleString()}
+          {/* Before/After - Technical Comparison */}
+          <div className="flex items-center gap-3 mb-5">
+            <div className="flex-1 bg-[#fcf9f4] border border-[#dac2b6] border-opacity-40 rounded-sm p-3 text-center">
+              <div className="text-[8px] text-[#877369] uppercase font-bold mb-1">Baseline</div>
+              <div className="text-[10px] font-bold text-[#877369] newsreader">₹{impactSummary.before.toLocaleString()}</div>
+            </div>
+            <div className="text-[#dac2b6] font-bold">»</div>
+            <div className="flex-1 bg-[#fcf9f4] border border-[#dac2b6] border-opacity-40 rounded-sm p-3 text-center">
+              <div className="text-[8px] text-[#877369] uppercase font-bold mb-1">Simulated</div>
+              <div className={`text-[10px] font-bold newsreader ${isPositiveDelta ? 'text-[#b91c1c]' : 'text-[#15803d]'}`}>
+                ₹{impactSummary.after.toLocaleString()}
+              </div>
             </div>
           </div>
-        </div>
 
           {/* Bullet Points - Tactical Notations */}
           <div className="space-y-3 pt-2">
@@ -113,8 +113,8 @@ export const AIInsightPanel: React.FC<AIInsightPanelProps> = ({
           </div>
           <div className="space-y-4">
             {recommendations.map((rec, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className={`flex flex-col gap-2 bg-white border border-[#dac2b6] border-opacity-40 rounded-sm p-4 text-[#553a34] transition-all cursor-pointer hover:border-[#974726] group ${expandedRecIndex === i ? 'ring-1 ring-[#974726]/20' : ''}`}
                 onClick={() => {
                   setExpandedRecIndex(expandedRecIndex === i ? null : i);
@@ -129,7 +129,7 @@ export const AIInsightPanel: React.FC<AIInsightPanelProps> = ({
                 {expandedRecIndex === i && (
                   <div className="mt-2 pl-5 space-y-3 animate-in fade-in slide-in-from-top-1 duration-200">
                     <p className="text-[10px] text-[#877369] leading-relaxed italic">{rec.reasoning}</p>
-                    
+
                     {rec.metrics && rec.metrics.length > 0 && (
                       <div className="flex flex-wrap gap-2 pt-1">
                         {rec.metrics.map((m, mi) => (

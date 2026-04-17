@@ -526,40 +526,40 @@ export default function SupplyChainDashboard() {
 
   return (
     <div className="h-screen w-full bg-[#fcf9f4] flex flex-col font-sans overflow-hidden text-[#553a34] selection:bg-[#ffdea0] selection:text-[#261900]">
-      <div className="h-20 border-b border-[#dac2b6] border-opacity-30 flex items-center justify-between px-10 bg-white z-20 shadow-sm">
+      <div className="h-24 border-b border-[#dac2b6] border-opacity-30 flex items-center justify-between px-10 bg-white z-20 shadow-sm">
         <div className="flex flex-col">
-          <h1 className="text-2xl font-bold text-[#553a34] tracking-tight uppercase">
-            ESGAudit <span className="text-[#974726] font-black italic lowercase text-sm tracking-widest">v2.1</span>
+          <h1 className="text-3xl font-bold text-[#553a34] tracking-tighter uppercase leading-none">
+            ESGAudit <span className="text-[#974726] font-bold italic lowercase text-base tracking-widest pl-1">v2.1</span>
           </h1>
-          <span className="text-[9px] text-[#877369] font-bold tracking-[0.3em] uppercase">Supply Topology Engine</span>
+          <span className="text-[11px] text-[#877369] font-bold tracking-[0.3em] uppercase mt-2">Supply Topology Engine</span>
         </div>
 
-        <div className="flex gap-6 items-center">
+        <div className="flex gap-8 items-center">
           {/* Toggle for Alternatives */}
-          <div className="flex items-center gap-2 mr-2 bg-[#ebe8e3] px-3 py-1.5 rounded-md border border-[#dac2b6] border-opacity-30">
-            <span className="text-[9px] text-[#877369] font-bold uppercase tracking-wider">Show Alternatives</span>
+          <div className="flex items-center gap-3 mr-4 bg-[#ebe8e3] px-4 py-2 rounded-md border border-[#dac2b6] border-opacity-30">
+            <span className="text-[10px] text-[#877369] font-bold uppercase tracking-widest">Show Alternatives</span>
             <button
               onClick={() => setShowAlternatives(!showAlternatives)}
-              className={`w-8 h-4 rounded-full transition-colors relative flex items-center p-0.5 ${showAlternatives ? 'bg-[#974726]' : 'bg-[#dac2b6]'}`}
+              className={`w-10 h-5 rounded-full transition-colors relative flex items-center p-1 ${showAlternatives ? 'bg-[#974726]' : 'bg-[#dac2b6]'}`}
             >
-              <div className={`w-3 h-3 bg-white rounded-full transition-all ${showAlternatives ? 'translate-x-4' : 'translate-x-0'}`} />
+              <div className={`w-3 h-3 bg-white rounded-full transition-all ${showAlternatives ? 'translate-x-5' : 'translate-x-0'}`} />
             </button>
           </div>
 
           {/* Change Summary Box - Editorial Style */}
           {changeSummary && (
-            <div className="max-w-xs bg-[#ebe8e3] border border-[#dac2b6] border-opacity-40 px-4 py-2 rounded-md">
-              <p className="text-[9px] text-[#974726] uppercase font-bold mb-1 tracking-wider">Active Analysis Update</p>
-              <p className="text-[11px] text-[#553a34] leading-snug line-clamp-2 font-medium italic">{changeSummary}</p>
+            <div className="max-w-sm bg-[#ebe8e3] border border-[#dac2b6] border-opacity-40 px-5 py-3 rounded-md">
+              <p className="text-[10px] text-[#974726] uppercase font-bold mb-1 tracking-widest">Active Analysis Update</p>
+              <p className="text-[12px] text-[#553a34] leading-relaxed line-clamp-2 font-semibold italic">{changeSummary}</p>
             </div>
           )}
-          <div className="text-right bg-[#fcf9f4] px-5 py-2 rounded-md border border-[#dac2b6] border-opacity-40">
-            <p className="text-[9px] text-[#877369] uppercase font-bold tracking-widest mb-1">Network Accumulation</p>
-            <p className="text-md font-bold text-[#553a34] tracking-tight">{totalNetworkEmissions.toLocaleString(undefined, { maximumFractionDigits: 0 })} <span className="text-[10px] text-[#877369] font-medium uppercase">tons CO2e</span></p>
+          <div className="text-right bg-[#fcf9f4] px-6 py-3 rounded-md border border-[#dac2b6] border-opacity-40">
+            <p className="text-[10px] text-[#877369] uppercase font-bold tracking-widest mb-1 leading-none">Network Accumulation</p>
+            <p className="text-xl font-bold text-[#553a34] tracking-tighter">{totalNetworkEmissions.toLocaleString(undefined, { maximumFractionDigits: 0 })} <span className="text-[11px] text-[#877369] font-bold uppercase pl-1">tons CO2e</span></p>
           </div>
-          <div className="text-right bg-[#b91c1c]/5 px-6 py-2 rounded-md border border-[#b91c1c]/20">
-            <p className="text-[9px] text-[#b91c1c] uppercase font-bold tracking-widest mb-1">Projected Policy Liability</p>
-            <p className="text-2xl font-bold text-[#b91c1c] tracking-tight newsreader">₹{shadowPL.toLocaleString()}</p>
+          <div className="text-right bg-[#b91c1c]/5 px-8 py-3 rounded-md border border-[#b91c1c]/20">
+            <p className="text-[10px] text-[#b91c1c] uppercase font-bold tracking-widest mb-1 leading-none">Projected Policy Liability</p>
+            <p className="text-3xl font-bold text-[#b91c1c] tracking-tighter">₹{shadowPL.toLocaleString()}</p>
           </div>
         </div>
       </div>
