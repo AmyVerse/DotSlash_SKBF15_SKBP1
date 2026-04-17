@@ -16,13 +16,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api", (req, res) => {
-  res.send("Hello from Symbiosis AI API");
+  res.send("Hello from ESGAudit API");
 });
 
 // Setup Swagger Documentation at /api-docs
 try {
   const swaggerDocument = JSON.parse(fs.readFileSync(path.join(__dirname, 'swagger.json'), 'utf8'));
-  
+
   // CDN options to prevent Vercel blank page errors
   const options = {
     explorer: true,
