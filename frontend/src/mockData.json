@@ -1,0 +1,35 @@
+{
+  "suppliers": [
+    { "id": "S1", "name": "Alpha Logistics", "category": "Transport", "criticality_level": "High", "spend": 4500000, "emissions": 12000, "dependency_score": 0.8 },
+    { "id": "S2", "name": "Beta Steel Corp", "category": "Raw Materials", "criticality_level": "Critical", "spend": 12000000, "emissions": 35000, "dependency_score": 0.95 },
+    { "id": "S3", "name": "Gamma Tech Solutions", "category": "IT", "criticality_level": "Medium", "spend": 1500000, "emissions": 800, "dependency_score": 0.6 },
+    { "id": "S4", "name": "Delta Plastics", "category": "Packaging", "criticality_level": "High", "spend": 2800000, "emissions": 8500, "dependency_score": 0.75 },
+    { "id": "S5", "name": "Epsilon Energy", "category": "Utilities", "criticality_level": "Critical", "spend": 8500000, "emissions": 25000, "dependency_score": 0.9 },
+    { "id": "S6", "name": "Zeta Facility Mgmt", "category": "Services", "criticality_level": "Low", "spend": 900000, "emissions": 200, "dependency_score": 0.3 },
+    { "id": "S7", "name": "Eta Chemical Co", "category": "Raw Materials", "criticality_level": "Critical", "spend": 6200000, "emissions": 18000, "dependency_score": 0.85 },
+    { "id": "S8", "name": "Theta Fleet Admin", "category": "Transport", "criticality_level": "Medium", "spend": 1200000, "emissions": 5000, "dependency_score": 0.5 },
+    { "id": "S9", "name": "Iota Hardware", "category": "Equipment", "criticality_level": "Low", "spend": 450000, "emissions": 150, "dependency_score": 0.4 },
+    { "id": "S10", "name": "Kappa Packaging Ltd", "category": "Packaging", "criticality_level": "High", "spend": 3100000, "emissions": 9200, "dependency_score": 0.7 }
+  ],
+  "actions": [
+    { "id": "A1", "title": "Switch to Solar in Plant A", "expected_emission_reduction": 15000, "current_emissions": 20000, "expected_cost_impact": 12000000, "status": "In Progress" },
+    { "id": "A2", "title": "Industrial Symbiosis: Waste Heat to Plant B", "expected_emission_reduction": 25000, "current_emissions": 30000, "expected_cost_impact": 5000000, "status": "Proposed" },
+    { "id": "A3", "title": "Upgrade HVAC Systems Head Office", "expected_emission_reduction": 2000, "current_emissions": 2500, "expected_cost_impact": 800000, "status": "Completed" },
+    { "id": "A4", "title": "Fleet Electrification Phase 1", "expected_emission_reduction": 8000, "current_emissions": 15000, "expected_cost_impact": 18000000, "status": "In Progress" },
+    { "id": "A5", "title": "AI Route Optimization for Logistics", "expected_emission_reduction": 5500, "current_emissions": 7000, "expected_cost_impact": 1200000, "status": "Proposed" },
+    { "id": "A6", "title": "LED Lighting Retrofit Plant C", "expected_emission_reduction": 1200, "current_emissions": 1500, "expected_cost_impact": 400000, "status": "Completed" },
+    { "id": "A7", "title": "Biomass Boiler Installation", "expected_emission_reduction": 18000, "current_emissions": 22000, "expected_cost_impact": 22000000, "status": "Proposed" },
+    { "id": "A8", "title": "Supplier Efficiency Training Program", "expected_emission_reduction": 3000, "current_emissions": 4000, "expected_cost_impact": 250000, "status": "Active" },
+    { "id": "A9", "title": "Smart Grid Integration", "expected_emission_reduction": 12000, "current_emissions": 18000, "expected_cost_impact": 8500000, "status": "Proposed" },
+    { "id": "A10", "title": "Shift to Biodegradable Packaging", "expected_emission_reduction": 4500, "current_emissions": 6200, "expected_cost_impact": 2100000, "status": "Proposed" },
+    { "id": "A11", "title": "Water Recycling System", "expected_emission_reduction": 1800, "current_emissions": 2500, "expected_cost_impact": 950000, "status": "In Progress" },
+    { "id": "A12", "title": "Warehouse Automation", "expected_emission_reduction": 6500, "current_emissions": 8500, "expected_cost_impact": 4200000, "status": "Active" },
+    { "id": "A13", "title": "Direct Air Capture Test Pilot", "expected_emission_reduction": 35000, "current_emissions": 40000, "expected_cost_impact": 35000000, "status": "Proposed" }
+  ],
+  "historical_emissions": {
+    "1W": [ { "date": "Mon", "value": 1120 }, { "date": "Tue", "value": 1150 }, { "date": "Wed", "value": 1080 }, { "date": "Thu", "value": 1050 }, { "date": "Fri", "value": 1100 }, { "date": "Sat", "value": 850 }, { "date": "Sun", "value": 820 } ],
+    "1M": [ { "date": "Week 1", "value": 7500 }, { "date": "Week 2", "value": 7200 }, { "date": "Week 3", "value": 7800 }, { "date": "Week 4", "value": 7100 } ],
+    "1Y": [ { "date": "Jan", "value": 32000 }, { "date": "Feb", "value": 31500 }, { "date": "Mar", "value": 33000 }, { "date": "Apr", "value": 30500 }, { "date": "May", "value": 29000 }, { "date": "Jun", "value": 28500 }, { "date": "Jul", "value": 29500 }, { "date": "Aug", "value": 30000 }, { "date": "Sep", "value": 28000 }, { "date": "Oct", "value": 27500 }, { "date": "Nov", "value": 29000 }, { "date": "Dec", "value": 26000 } ],
+    "5Y": [ { "date": "2020", "value": 450000 }, { "date": "2021", "value": 420000 }, { "date": "2022", "value": 390000 }, { "date": "2023", "value": 385000 }, { "date": "2024", "value": 360000 } ]
+  }
+}
